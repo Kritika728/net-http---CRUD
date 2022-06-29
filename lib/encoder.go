@@ -11,7 +11,7 @@ func EncoderResponse(w http.ResponseWriter, movies []model.Movie) {
 	json.NewEncoder(w).Encode(response)
 }
 
-func DecoderRequest(r *http.Request, movieRequest model.Movie) (response model.JsonResponse) {
+func DecoderRequest(r *http.Request) (movieRequest model.Movie, response model.JsonResponse) {
 	if err := json.NewDecoder(r.Body).Decode(&movieRequest); err != nil {
 		response = model.JsonResponse{Type: "Error", Message: "Error in Parsing"}
 

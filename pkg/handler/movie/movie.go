@@ -19,7 +19,7 @@ func GetMovies(w http.ResponseWriter, r *http.Request) {
 	db := db.SetupDB()
 	lib.PrintMessage("Getting movies...")
 	// Get all movies from movies table
-	utils.GetMoviesDetail(db, movies)
+	movies = utils.GetMoviesDetail(db)
 
 	lib.EncoderResponse(w, movies)
 
@@ -30,8 +30,7 @@ func AddMovie(w http.ResponseWriter, r *http.Request) {
 	var response model.JsonResponse
 	var movieRequest model.Movie
 
-	if response = lib.DecoderRequest(r, movieRequest); response.Type != "Error" {
-
+	if movieRequest, response = lib.DecoderRequest(r); response.Type != "Error" {
 		response = utils.ValidateMovieData(movieRequest.MovieID, movieRequest.MovieName)
 	}
 
@@ -48,7 +47,7 @@ func UpdateMovie(w http.ResponseWriter, r *http.Request) {
 	var movieRequest model.Movie
 	var response model.JsonResponse
 
-	response = lib.DecoderRequest(r, movieRequest)
+	movieRequest, response = lib.DecoderRequest(r)
 
 	if response.Type != "Error" {
 		Id := utils.GetMovieID(r)

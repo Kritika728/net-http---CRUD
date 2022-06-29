@@ -7,7 +7,7 @@ import (
 	"nethttpcrud/model"
 )
 
-func GetMoviesDetail(db *sql.DB, movies []model.Movie) {
+func GetMoviesDetail(db *sql.DB) (movies []model.Movie) {
 
 	rows, err := db.Query("SELECT * FROM movies")
 	// check errors
@@ -26,6 +26,7 @@ func GetMoviesDetail(db *sql.DB, movies []model.Movie) {
 
 		movies = append(movies, model.Movie{MovieID: movieID, MovieName: movieName})
 	}
+	return
 
 }
 
