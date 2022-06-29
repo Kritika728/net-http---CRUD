@@ -3,11 +3,10 @@ package handler
 import (
 	"encoding/json"
 	"net/http"
-
-	"github.com/Kritika728/db"
-	"github.com/Kritika728/lib"
-	"github.com/Kritika728/model"
-	"github.com/Kritika728/pkg/utils"
+	"nethttpcrud/db"
+	"nethttpcrud/lib"
+	"nethttpcrud/model"
+	"nethttpcrud/pkg/utils"
 )
 
 // Get all movies
@@ -31,9 +30,10 @@ func AddMovie(w http.ResponseWriter, r *http.Request) {
 	var response model.JsonResponse
 	var movieRequest model.Movie
 
-	lib.DecoderRequest(r, movieRequest)
+	if response = lib.DecoderRequest(r, movieRequest); response.Type != "Error" {
 
-	response = utils.ValidateMovieData(movieRequest.MovieID, movieRequest.MovieName)
+		response = utils.ValidateMovieData(movieRequest.MovieID, movieRequest.MovieName)
+	}
 
 	if response.Type != "Error" {
 
@@ -48,14 +48,16 @@ func UpdateMovie(w http.ResponseWriter, r *http.Request) {
 	var movieRequest model.Movie
 	var response model.JsonResponse
 
-	lib.DecoderRequest(r, movieRequest)
+	response = lib.DecoderRequest(r, movieRequest)
 
-	Id := utils.GetMovieID(r)
+	if response.Type != "Error" {
+		Id := utils.GetMovieID(r)
 
-	utils.UpdateMovie(movieRequest, Id)
+		utils.UpdateMovie(movieRequest, Id)
 
-	response = model.JsonResponse{Type: "Success", Message: "Successfully updated"}
-	json.NewEncoder(w).Encode(response)
+		response = model.JsonResponse{Type: "Success", Message: "Successfully updated"}
+		json.NewEncoder(w).Encode(response)
+	}
 }
 
 func DeleteMovie(w http.ResponseWriter, r *http.Request) {

@@ -3,12 +3,11 @@ package utils
 import (
 	"database/sql"
 	"nethttpcrud/db"
-
-	"github.com/Kritika728/lib"
-	"github.com/Kritika728/model"
+	"nethttpcrud/lib"
+	"nethttpcrud/model"
 )
 
-func GetMoviesDetail(db *sql.DB, movies model.Movie) {
+func GetMoviesDetail(db *sql.DB, movies []model.Movie) {
 
 	rows, err := db.Query("SELECT * FROM movies")
 	// check errors

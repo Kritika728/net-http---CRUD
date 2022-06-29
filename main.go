@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	handler "nethttpcrud/pkg/handler/movie"
 
-	"github.com/Kritika728/pkg/handler"
 	_ "github.com/lib/pq"
 )
 

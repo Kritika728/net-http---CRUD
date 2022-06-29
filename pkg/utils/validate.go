@@ -2,8 +2,7 @@ package utils
 
 import (
 	"net/http"
-
-	"github.com/Kritika728/model"
+	"nethttpcrud/model"
 )
 
 func ValidateMovieData(id, name string) (response model.JsonResponse) {
